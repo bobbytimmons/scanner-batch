@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.bouncycastle.asn1.crmf.SinglePubInfo.web
+
 plugins {
 	java
 	id("org.springframework.boot") version "3.2.10"
@@ -9,7 +11,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(23)
 	}
 }
 
@@ -24,13 +26,18 @@ repositories {
 }
 
 extra["springCloudVersion"] = "2023.0.3"
+extra["postgresqlVersion"] = "42.5.0"
+extra["lombokVersion"] = "1.18.24"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-batch")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.kafka:spring-kafka")
-	compileOnly("org.projectlombok:lombok")
-	annotationProcessor("org.projectlombok:lombok")
+	implementation("org.postgresql:postgresql:${property("postgresqlVersion")}")
+	compileOnly("org.projectlombok:lombok:${property("lombokVersion")}")
+	annotationProcessor("org.projectlombok:lombok:${property("lombokVersion")}")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.batch:spring-batch-test")
 	testImplementation("org.springframework.kafka:spring-kafka-test")

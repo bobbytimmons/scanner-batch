@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  postgres-db:
+    image: postgres:17
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=arbitrage
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+
+
+
+
+
+
