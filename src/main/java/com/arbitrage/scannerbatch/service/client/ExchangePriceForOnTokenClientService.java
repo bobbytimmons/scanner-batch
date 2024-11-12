@@ -14,7 +14,7 @@ public class ExchangePriceForOnTokenClientService {
 
     private final ExchangePriceForOnTokenClient client;
 
-    public List<Ticker> getAdeptProject(String id) {
+    public List<Ticker> getExchange(String id) {
         return client.getExchange(id);
     }
 

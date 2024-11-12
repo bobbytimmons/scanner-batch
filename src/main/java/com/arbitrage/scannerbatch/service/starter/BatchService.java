@@ -1,4 +1,4 @@
-package com.arbitrage.scannerbatch.service;
+package com.arbitrage.scannerbatch.service.starter;
 
 
 import lombok.RequiredArgsConstructor;
@@ -16,9 +16,10 @@ public class BatchService {
     private JobLauncher jobLauncher;
     private Job job;
 
-    public JobExecution startBatchJob(String token) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+    public JobExecution startBatchJob(String token, Boolean centralized) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addString("token", token)
+                .addString("centralized", centralized.toString())
                 .addLong("startAt", System.currentTimeMillis())
                 .toJobParameters();
         return jobLauncher.run(job, jobParameters);

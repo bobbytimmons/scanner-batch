@@ -1,8 +1,15 @@
 package com.arbitrage.scannerbatch.service.client.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+
+@Getter
+@Setter
 public class Ticker {
+
     private String base;
     private String target;
     private Market market;
@@ -22,5 +29,9 @@ public class Ticker {
     private String coinId;
     private String targetCoinId;
 
-    // Getters and Setters
+    public String getBaseAndTargetConcatenetadeString() {
+        return base+target;
+
+    }
+
 }

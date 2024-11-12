@@ -27,7 +27,7 @@ repositories {
 
 extra["springCloudVersion"] = "2023.0.3"
 extra["postgresqlVersion"] = "42.5.0"
-extra["lombokVersion"] = "1.18.24"
+extra["lombokVersion"] = "1.18.30"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-batch")

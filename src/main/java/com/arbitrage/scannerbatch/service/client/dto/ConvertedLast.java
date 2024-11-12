@@ -1,5 +1,11 @@
 package com.arbitrage.scannerbatch.service.client.dto;
 
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ConvertedLast {
     private double btc;
     private double eth;
