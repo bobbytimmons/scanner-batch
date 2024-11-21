@@ -1,11 +1,9 @@
 package com.arbitrage.scannerbatch.service.client;
 
-import com.arbitrage.scannerbatch.service.client.dto.Ticker;
+import com.arbitrage.scannerbatch.service.client.dto.CryptoData;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Lazy
 @Service
@@ -14,8 +12,8 @@ public class ExchangePriceForOnTokenClientService {
 
     private final ExchangePriceForOnTokenClient client;
 
-    public List<Ticker> getExchange(String id) {
-        return client.getExchange(id);
+    public CryptoData getExchange(String id, String apiKey) {
+        return client.getExchange(id, apiKey);
     }
 
 }

@@ -1,17 +1,23 @@
 package com.arbitrage.scannerbatch.batch.processor;
 
-import com.arbitrage.scannerbatch.service.client.dto.Ticker;
+import com.arbitrage.scannerbatch.service.client.dto.CryptoData;
+import com.arbitrage.scannerbatch.service.processor.ExchangePriceItemProcessorService;
+import com.arbitrage.scannerbatch.service.processor.dto.MaxGapTickers;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
-public class ExchangePriceItemProcessor implements ItemProcessor<List<Ticker>, List<Ticker>> {
+@RequiredArgsConstructor
+public class ExchangePriceItemProcessor implements ItemProcessor< CryptoData,MaxGapTickers> {
+
+    private final ExchangePriceItemProcessorService exchangePriceItemProcessorService;
+
 
     @Override
-    public List<Ticker> process(List<Ticker> dataItems)  {
-
-        return dataItems; // Return the processed list
+    public MaxGapTickers process(@NonNull CryptoData dataItems)  {
+        return exchangePriceItemProcessorService.process(dataItems); // Return the processed list
     }
+
 }

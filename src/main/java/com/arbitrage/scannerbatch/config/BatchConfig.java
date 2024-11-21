@@ -1,20 +1,21 @@
 package com.arbitrage.scannerbatch.config;
 
+import com.arbitrage.scannerbatch.batch.processor.ExchangePriceItemProcessor;
 import com.arbitrage.scannerbatch.batch.reader.ExchangePriceItemReader;
-import com.arbitrage.scannerbatch.service.client.dto.Ticker;
+import com.arbitrage.scannerbatch.batch.writer.MaxGapTickersKafkaWriter;
+import com.arbitrage.scannerbatch.service.client.dto.CryptoData;
+import com.arbitrage.scannerbatch.service.processor.dto.MaxGapTickers;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@EnableBatchProcessing
 public class BatchConfig {
 
     private final JobRepository jobRepository;
@@ -34,14 +35,12 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step step(ExchangePriceItemReader reader) {
+    public Step step(ExchangePriceItemReader reader, ExchangePriceItemProcessor processor, MaxGapTickersKafkaWriter writer) {
         return new StepBuilder("step", jobRepository)
-                .<Ticker, Ticker>chunk(10, transactionManager)
+                .<CryptoData, MaxGapTickers>chunk(1, transactionManager)
                 .reader(reader)
-                .processor(items -> items) // No-op processor, replace with actual processor if needed
-                .writer(items -> {
-                    // Define your writer logic here
-                })
+                .processor(processor)
+                .writer(writer)
                 .build();
     }
 }

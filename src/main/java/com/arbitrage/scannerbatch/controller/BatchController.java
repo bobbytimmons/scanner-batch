@@ -11,15 +11,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class BatchController {
 
-    private BatchService batchService;
+
+    private final BatchService batchService;
 
     @GetMapping("/startBatch")
-    public ResponseEntity<String> startBatch(@RequestParam String token, @RequestParam boolean centralized) {
+    public ResponseEntity<String> startBatch(@RequestParam String token, @RequestParam boolean centralized, @RequestParam("x-cg-pro-api-key") String apiKey) {
         try {
-            batchService.startBatchJob(token, centralized);
+            batchService.startBatchJob(token, centralized, apiKey);
             return ResponseEntity.ok("Batch job has been invoked");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Batch job failed to start");
+        }
+    }
+
+    @GetMapping("/stopBatch")
+    public ResponseEntity<String> stopBatch() {
+        try {
+            batchService.stopBatchJob();
+            return ResponseEntity.ok("Batch job has been stopped");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Batch job failed to stop");
         }
     }
 }
